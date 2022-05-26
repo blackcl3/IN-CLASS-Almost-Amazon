@@ -1,7 +1,10 @@
 import { deleteBook } from '../../api/bookData';
-import viewBookDetails from '../../api/mergedData';
+import { viewBookDetails, viewAuthorDetails } from '../../api/mergedData';
 import { showBooks } from '../components/pages/books';
 import viewBook from '../components/pages/viewBook';
+import { deleteSingleAuthor } from '../../api/authorData';
+import { showAuthors } from '../components/pages/authors';
+import viewBooksByAuthor from '../components/pages/viewAuthor';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -33,9 +36,14 @@ const domEvents = () => {
     if (e.target.id.includes('delete-author-btn')) {
       // eslint-disable-next-line no-alert
       if (window.confirm('Want to delete?')) {
-        console.warn('DELETE AUTHOR', e.target.id);
-        console.warn(e.target.id.split('--'));
+        const [, authorFirebaseKey] = e.target.id.split('--');
+        deleteSingleAuthor(authorFirebaseKey).then((authorsArray) => showAuthors(authorsArray));
       }
+    }
+    // View Author Button
+    if (e.target.id.includes('view-author-btn')) {
+      const [, authorFirebaseKey] = e.target.id.split('--');
+      viewAuthorDetails(authorFirebaseKey).then((authorObject) => viewBooksByAuthor(authorObject));
     }
 
     // FIXME: ADD CLICK EVENT FOR SHOWING FORM FOR ADDING AN AUTHOR
