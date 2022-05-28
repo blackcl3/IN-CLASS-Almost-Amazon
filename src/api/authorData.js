@@ -6,16 +6,26 @@ const dbUrl = firebaseConfig.databaseURL;
 // FIXME:  GET ALL AUTHORS
 const getAuthors = () => new Promise((resolve, reject) => {
   axios.get(`${dbUrl}/authors.json`)
-    .then((response) => resolve(Object.values(response.data)))
+    .then((response) => {
+      if (response.data) {
+        resolve(Object.values(response.data));
+      } else {
+        resolve([]);
+      }
+    })
     .catch((error) => reject(error));
 });
 
 // FIXME: CREATE AUTHOR
 const createAuthor = (newAuthor) => new Promise((resolve, reject) => {
   axios.post(`${dbUrl}/authors.json`, newAuthor)
-    .then(() => {
-      getAuthors()
-        .then((authorsArray) => resolve(Object.values(authorsArray)));
+    .then((response) => {
+      const payload = { firebaseKey: response.data.name };
+      axios.patch(`${dbUrl}/authors/${payload.firebaseKey}.json`)
+        .then(() => {
+          getAuthors()
+            .then((authorsArray) => resolve(Object.values(authorsArray)));
+        });
     })
     .catch((error) => reject(error));
 });
