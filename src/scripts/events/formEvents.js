@@ -18,13 +18,10 @@ const formEvents = () => {
 
     // FIXME: ADD CLICK EVENT FOR SUBMITTING FORM FOR ADDING AN AUTHOR
     if (e.target.id.includes('submit-author')) {
-      const firstName = e.target[0].value;
-      const lastName = e.target[1].value;
-      const email = e.target[2].value;
       const newAuthor = {
-        first_name: firstName,
-        last_name: lastName,
-        email
+        first_name: document.querySelector('#first_name').value,
+        last_name: document.querySelector('#last_name').value,
+        email: document.querySelector('#email').value
       };
       createAuthor(newAuthor).then((authorsArray) => showAuthors(authorsArray));
     }
