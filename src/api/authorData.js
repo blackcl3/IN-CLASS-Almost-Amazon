@@ -21,7 +21,7 @@ const createAuthor = (newAuthor) => new Promise((resolve, reject) => {
   axios.post(`${dbUrl}/authors.json`, newAuthor)
     .then((response) => {
       const payload = { firebaseKey: response.data.name };
-      axios.patch(`${dbUrl}/authors/${payload.firebaseKey}.json`)
+      axios.patch(`${dbUrl}/authors/${payload.firebaseKey}.json`, payload)
         .then(() => {
           getAuthors()
             .then((authorsArray) => resolve(Object.values(authorsArray)));
@@ -53,7 +53,11 @@ const deleteSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 // FIXME: UPDATE AUTHOR
-const updateAuthor = () => {};
+const updateAuthor = (authorObj) => new Promise((resolve, reject) => {
+  axios.patch(`$${dbUrl}}/authors/${authorObj}.json`, authorObj)
+    .then(() => getAuthors().then(resolve))
+    .catch(reject);
+});
 
 // TODO: GET A SINGLE AUTHOR'S BOOKS
 const getAuthorBooks = () => {};

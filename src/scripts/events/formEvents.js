@@ -1,19 +1,35 @@
 import { createAuthor } from '../../api/authorData';
-import { showAuthors } from '../components/pages/authors';
+import { createBook, updateBook } from '../../api/bookData';
+import showAuthors from '../components/pages/authors';
+import { showBooks } from '../components/pages/books';
 
 const formEvents = () => {
   document.querySelector('#main-container').addEventListener('submit', (e) => {
     e.preventDefault();
     // TODO: CLICK EVENT FOR SUBMITTING FORM FOR ADDING A BOOK
     if (e.target.id.includes('submit-book')) {
-      console.warn('CLICKED SUBMIT BOOK', e.target.id);
+      const newBook = {
+        description: document.querySelector('#description').value,
+        image: document.querySelector('#image').value,
+        price: document.querySelector('#price').value,
+        sale: document.querySelector('#sale').value,
+        title: document.querySelector('#title').value,
+      };
+      createBook(newBook).then((updatedBooksArray) => showBooks(updatedBooksArray));
     }
 
     // TODO: CLICK EVENT FOR EDITING A BOOK
     if (e.target.id.includes('update-book')) {
       const [, firebaseKey] = e.target.id.split('--');
-      console.warn('CLICKED UPDATE BOOK', e.target.id);
-      console.warn(firebaseKey);
+      const updatedBook = {
+        description: document.querySelector('#description').value,
+        image: document.querySelector('#image').value,
+        price: document.querySelector('#price').value,
+        sale: document.querySelector('#sale').value,
+        title: document.querySelector('#title').value,
+        firebaseKey
+      };
+      updateBook(updatedBook).then((updatedBooksArray) => showBooks(updatedBooksArray));
     }
 
     // FIXME: ADD CLICK EVENT FOR SUBMITTING FORM FOR ADDING AN AUTHOR

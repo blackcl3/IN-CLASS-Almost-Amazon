@@ -12,10 +12,10 @@ const showAuthors = (array) => {
   const btnString = '<button class="btn btn-success btn-lg mb-4" id="add-author-btn">Add An Author</button>';
 
   renderToDOM('#add-button', btnString);
-
-  let domString = '';
-  array.forEach((item) => {
-    domString += `
+  if (array.length) {
+    let domString = '';
+    array.forEach((item) => {
+      domString += `
     <div class="card" style="width: 18rem;">
       <div class="card-body">
         <h5 class="card-title">${item.first_name} ${item.last_name}</h5>
@@ -28,8 +28,11 @@ const showAuthors = (array) => {
       </div>
     </div>
     `;
-  });
-  renderToDOM('#store', domString);
+    });
+    renderToDOM('#store', domString);
+  } else {
+    emptyAuthors();
+  }
 };
 
-export { showAuthors, emptyAuthors };
+export default showAuthors;

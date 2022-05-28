@@ -2,7 +2,7 @@ import { getAuthors, filterFavoriteAuthors } from '../../api/authorData';
 import { booksOnSale, getBooks } from '../../api/bookData';
 import { showBooks } from '../components/pages/books';
 import signOut from '../helpers/auth/signOut';
-import { showAuthors, emptyAuthors } from '../components/pages/authors';
+import showAuthors from '../components/pages/authors';
 
 // navigation events
 const navigationEvents = () => {
@@ -19,13 +19,7 @@ const navigationEvents = () => {
   });
 
   document.querySelector('#authors').addEventListener('click', () => {
-    getAuthors().then((authorsArray) => {
-      if (authorsArray) {
-        showAuthors(authorsArray);
-      } else {
-        emptyAuthors();
-      }
-    });
+    getAuthors().then((authorsArray) => showAuthors(authorsArray));
   });
 
   document.querySelector('#favorite-authors').addEventListener('click', () => {
