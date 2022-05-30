@@ -54,13 +54,10 @@ const deleteSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
 
 // FIXME: UPDATE AUTHOR
 const updateAuthor = (authorObj) => new Promise((resolve, reject) => {
-  axios.patch(`$${dbUrl}}/authors/${authorObj}.json`, authorObj)
+  axios.patch(`${dbUrl}/authors/${authorObj.firebaseKey}.json`, authorObj)
     .then(() => getAuthors().then(resolve))
     .catch(reject);
 });
-
-// TODO: GET A SINGLE AUTHOR'S BOOKS
-const getAuthorBooks = () => {};
 
 export {
   getAuthors,
@@ -68,6 +65,5 @@ export {
   getSingleAuthor,
   deleteSingleAuthor,
   updateAuthor,
-  getAuthorBooks,
   filterFavoriteAuthors
 };

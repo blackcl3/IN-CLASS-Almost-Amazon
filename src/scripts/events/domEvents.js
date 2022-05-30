@@ -6,7 +6,7 @@ import showAuthors from '../components/pages/authors';
 import viewBooksByAuthor from '../components/pages/viewAuthor';
 import addAuthorForm from '../components/forms/addAuthorForm';
 import addBookForm from '../components/forms/addBookForm';
-import { updateAuthor } from '../../api/authorData';
+import { getSingleAuthor } from '../../api/authorData';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -55,8 +55,7 @@ const domEvents = () => {
     // FIXME: ADD CLICK EVENT FOR EDITING AN AUTHOR
     if (e.target.id.includes('update-author')) {
       const [, authorFirebaseKey] = e.target.id.split('--');
-      addAuthorForm();
-      updateAuthor(authorFirebaseKey).then(showAuthors);
+      getSingleAuthor(authorFirebaseKey).then((authorObj) => addAuthorForm(authorObj));
     }
   });
 };

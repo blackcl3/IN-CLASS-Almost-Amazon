@@ -1,4 +1,5 @@
-import { getSingleAuthor, deleteSingleAuthor } from './authorData';
+import { deleteSingleAuthor, getSingleAuthor } from './authorData';
+// eslint-disable-next-line no-unused-vars
 import { getSingleBook, getBooksByAuthor, deleteBook } from './bookData';
 
 const viewBookDetails = (bookFirebaseKey) => new Promise((resolve, reject) => {
@@ -26,7 +27,7 @@ const viewAuthorDetails = (authorFirebaseKey) => new Promise((resolve, reject) =
 const deleteAuthorBooks = (authorFirebaseKey) => new Promise((resolve, reject) => {
   getBooksByAuthor(authorFirebaseKey)
     .then((bookArray) => {
-      const deleteBookPromises = bookArray.map((book) => deleteBook(book.bookFirebaseKey));
+      const deleteBookPromises = bookArray.map((book) => deleteBook(book.firebaseKey));
       Promise.all(deleteBookPromises).then(() => {
         deleteSingleAuthor(authorFirebaseKey).then(resolve);
       });

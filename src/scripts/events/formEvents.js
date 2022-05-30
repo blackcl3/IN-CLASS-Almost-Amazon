@@ -1,4 +1,4 @@
-import { createAuthor } from '../../api/authorData';
+import { createAuthor, updateAuthor } from '../../api/authorData';
 import { createBook, updateBook } from '../../api/bookData';
 import showAuthors from '../components/pages/authors';
 import { showBooks } from '../components/pages/books';
@@ -42,6 +42,16 @@ const formEvents = () => {
       createAuthor(newAuthor).then((authorsArray) => showAuthors(authorsArray));
     }
     // FIXME:ADD CLICK EVENT FOR EDITING AN AUTHOR
+    if (e.target.id.includes('update-author')) {
+      const [, firebaseKey] = e.target.id.split('--');
+      const updatedAuthor = {
+        first_name: document.querySelector('#first_name').value,
+        last_name: document.querySelector('#last_name').value,
+        email: document.querySelector('#email').value,
+        firebaseKey
+      };
+      updateAuthor(updatedAuthor).then((authorsArray) => showAuthors(authorsArray));
+    }
   });
 };
 
