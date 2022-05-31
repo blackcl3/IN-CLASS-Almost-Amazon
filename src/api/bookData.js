@@ -34,10 +34,26 @@ const getSingleBook = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 // TODO: CREATE BOOK
-const createBook = () => {};
+function createBook(newBook) {
+  return new Promise((resolve, reject) => {
+    axios.post(`${dbUrl}/books.json`, newBook)
+      .then((response) => {
+        const payload = { firebaseKey: response.data.name };
+        axios.patch(`${dbUrl}/books/${payload.firebaseKey}.json`, payload)
+          .then(() => {
+            getBooks()
+              .then(resolve);
+          });
+      }).catch(reject);
+  });
+}
 
 // TODO: UPDATE BOOK
-const updateBook = () => {};
+const updateBook = (bookObj) => new Promise((resolve, reject) => {
+  axios.patch(`${dbUrl}/books/${bookObj.firebaseKey}.json`, bookObj)
+    .then(() => getBooks().then(resolve))
+    .catch(reject);
+});
 
 // TODO: FILTER BOOKS ON SALE
 const booksOnSale = () => new Promise((resolve, reject) => {
