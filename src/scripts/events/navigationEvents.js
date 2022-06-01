@@ -5,7 +5,7 @@ import signOut from '../helpers/auth/signOut';
 import showAuthors from '../components/pages/authors';
 
 // navigation events
-const navigationEvents = () => {
+const navigationEvents = (uid) => {
 // LOGOUT BUTTON
   document.querySelector('#logout-button')
     .addEventListener('click', signOut);
@@ -15,11 +15,11 @@ const navigationEvents = () => {
   });
 
   document.querySelector('#all-books').addEventListener('click', () => {
-    getBooks().then((booksArray) => showBooks(booksArray));
+    getBooks(uid).then((booksArray) => showBooks(booksArray));
   });
 
   document.querySelector('#authors').addEventListener('click', () => {
-    getAuthors().then((authorsArray) => showAuthors(authorsArray));
+    getAuthors(uid).then((authorsArray) => showAuthors(authorsArray));
   });
 
   document.querySelector('#favorite-authors').addEventListener('click', () => {

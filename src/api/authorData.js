@@ -4,8 +4,8 @@ import firebaseConfig from './apiKeys';
 const dbUrl = firebaseConfig.databaseURL;
 
 // FIXME:  GET ALL AUTHORS
-const getAuthors = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/authors.json`)
+const getAuthors = (uid) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/authors.json?orderBy="uid"&equalTo="${uid}"`)
     .then((response) => {
       if (response.data) {
         resolve(Object.values(response.data));
@@ -37,10 +37,12 @@ const getSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const filterFavoriteAuthors = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/authors.json?orderBy="favorite"&equalTo=true`)
-    .then((response) => resolve(Object.values(response.data)))
+const filterFavoriteAuthors = (uid) => new Promise((resolve, reject) => {
+  getAuthors(uid).then((response) => resolve(console.warn(Object.values(response.data))))
     .catch((error) => reject(error));
+  // axios.get(`${dbUrl}/authors.json?orderBy="favorite"&equalTo=true`)
+  //   .then((response) => resolve(Object.values(response.data)))
+  //   .catch((error) => reject(error));
 });
 
 // FIXME: DELETE AUTHOR
