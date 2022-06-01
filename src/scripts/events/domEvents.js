@@ -14,7 +14,7 @@ const domEvents = (uid) => {
       // eslint-disable-next-line no-alert
       if (window.confirm('Want to delete?')) {
         const [, firebaseKey] = e.target.id.split('--');
-        deleteBook(firebaseKey).then((booksArray) => showBooks(booksArray));
+        deleteBook(firebaseKey, uid).then((booksArray) => showBooks(booksArray));
       }
     }
 
@@ -26,7 +26,7 @@ const domEvents = (uid) => {
     // TODO: CLICK EVENT EDITING/UPDATING A BOOK
     if (e.target.id.includes('edit-book-btn')) {
       const [, firebaseKey] = e.target.id.split('--');
-      getSingleBook(firebaseKey).then((bookObj) => addBookForm(bookObj));
+      getSingleBook(firebaseKey).then((bookObj) => addBookForm(uid, bookObj));
     }
     // TODO: CLICK EVENT FOR VIEW BOOK DETAILS
     if (e.target.id.includes('view-book-btn')) {
@@ -39,7 +39,7 @@ const domEvents = (uid) => {
       // eslint-disable-next-line no-alert
       if (window.confirm('Want to delete?')) {
         const [, authorFirebaseKey] = e.target.id.split('--');
-        deleteAuthorBooks(authorFirebaseKey).then(showAuthors);
+        deleteAuthorBooks(authorFirebaseKey, uid).then(showAuthors);
       }
     }
     // View Author Button
@@ -56,6 +56,13 @@ const domEvents = (uid) => {
     if (e.target.id.includes('update-author')) {
       const [, authorFirebaseKey] = e.target.id.split('--');
       getSingleAuthor(authorFirebaseKey).then((authorObj) => addAuthorForm(authorObj));
+    }
+
+    if (e.target.id.includes('add-favorite-author-btn')) {
+      const [, authorFirebaseKey] = e.target.id.split('--');
+      getSingleAuthor(authorFirebaseKey).then((response) => {
+        console.warn(response);
+      });
     }
   });
 };

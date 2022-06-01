@@ -11,7 +11,7 @@ const navigationEvents = (uid) => {
     .addEventListener('click', signOut);
 
   document.querySelector('#sale-books').addEventListener('click', () => {
-    booksOnSale().then((saleBooksArray) => showBooks(saleBooksArray));
+    booksOnSale(uid).then((saleBooksArray) => showBooks(saleBooksArray));
   });
 
   document.querySelector('#all-books').addEventListener('click', () => {
@@ -23,7 +23,7 @@ const navigationEvents = (uid) => {
   });
 
   document.querySelector('#favorite-authors').addEventListener('click', () => {
-    filterFavoriteAuthors().then((favoriteAuthorsArray) => showAuthors(favoriteAuthorsArray));
+    filterFavoriteAuthors(uid).then((favoriteAuthorsArray) => showAuthors(favoriteAuthorsArray));
   });
 
   // STRETCH: SEARCH

@@ -12,7 +12,7 @@ const formEvents = (uid) => {
         description: document.querySelector('#description').value,
         image: document.querySelector('#image').value,
         price: document.querySelector('#price').value,
-        sale: document.querySelector('#sale').value,
+        sale: document.querySelector('#sale').checked,
         title: document.querySelector('#title').value,
         author_id: document.querySelector('#author_id').value,
         uid
@@ -27,7 +27,7 @@ const formEvents = (uid) => {
         description: document.querySelector('#description').value,
         image: document.querySelector('#image').value,
         price: document.querySelector('#price').value,
-        sale: document.querySelector('#sale').value,
+        sale: document.querySelector('#sale').checked,
         title: document.querySelector('#title').value,
         author_id: document.querySelector('#author_id').value,
         firebaseKey,
@@ -42,9 +42,10 @@ const formEvents = (uid) => {
         first_name: document.querySelector('#first_name').value,
         last_name: document.querySelector('#last_name').value,
         email: document.querySelector('#email').value,
+        favorite: document.querySelector('#favorite').checked,
         uid
       };
-      createAuthor(newAuthor).then((authorsArray) => showAuthors(authorsArray));
+      createAuthor(newAuthor, uid).then((authorsArray) => showAuthors(authorsArray));
     }
     // FIXME:ADD CLICK EVENT FOR EDITING AN AUTHOR
     if (e.target.id.includes('update-author')) {
@@ -53,10 +54,11 @@ const formEvents = (uid) => {
         first_name: document.querySelector('#first_name').value,
         last_name: document.querySelector('#last_name').value,
         email: document.querySelector('#email').value,
+        favorite: document.querySelector('#favorite').checked,
         firebaseKey,
         uid
       };
-      updateAuthor(updatedAuthor).then((authorsArray) => showAuthors(authorsArray));
+      updateAuthor(updatedAuthor, uid).then((authorsArray) => showAuthors(authorsArray));
     }
   });
 };
