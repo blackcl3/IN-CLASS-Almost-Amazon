@@ -24,7 +24,7 @@ const showAuthors = (array) => {
         <i class="btn btn-success fas fa-eye" id="view-author-btn--${item.firebaseKey}"></i>
         <i class="fas fa-edit btn btn-info" id="update-author--${item.firebaseKey}"></i>
         <i class="btn btn-danger fas fa-trash-alt" id="delete-author-btn--${item.firebaseKey}"></i>
-        <p class="card-text bold">${item.favorite ? '<span class="badge badge-pill sale-badge"><i class="fa fa-bell" aria-hidden="true"></i> Favorite</span>' : '<span><button id="add-favorite-author-btn">Add as favorite</button></span>'}</p>
+        <p class="card-text bold">${item.favorite ? `<span class="badge badge-pill sale-badge favorite-span"id="favorite-author-span--${item.firebaseKey}" class="fa fa-bell" aria-hidden="true">Favorite</span>` : `<span><button id="add-favorite-author-btn--${item.firebaseKey}" class="favorite-span">Add as favorite</button></span>`}</p>
       </div>
     </div>
     `;
