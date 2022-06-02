@@ -64,6 +64,12 @@ const booksOnSale = (uid) => new Promise((resolve, reject) => {
 
 // TODO: STRETCH...SEARCH BOOKS
 
+const searchBooks = (uid, searchValue) => new Promise((resolve, reject) => {
+  getBooks(uid)
+    .then((response) => resolve(response.filter((book) => book.title.toLowerCase().includes(searchValue))))
+    .catch((error) => reject(error));
+});
+
 export {
   getBooks,
   createBook,
@@ -71,5 +77,6 @@ export {
   deleteBook,
   getBooksByAuthor,
   getSingleBook,
-  updateBook
+  updateBook,
+  searchBooks
 };
