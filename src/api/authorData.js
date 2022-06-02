@@ -40,16 +40,13 @@ const getSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
 const filterFavoriteAuthors = (uid) => new Promise((resolve, reject) => {
   getAuthors(uid).then((response) => resolve(response.filter((author) => author.favorite)))
     .catch((error) => reject(error));
-  // axios.get(`${dbUrl}/authors.json?orderBy="favorite"&equalTo=true`)
-  //   .then((response) => resolve(Object.values(response.data)))
-  //   .catch((error) => reject(error));
 });
 
 // FIXME: DELETE AUTHOR
-const deleteSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
+const deleteSingleAuthor = (firebaseKey, uid) => new Promise((resolve, reject) => {
   axios.delete(`${dbUrl}/authors/${firebaseKey}.json`)
     .then(() => {
-      getAuthors().then((authorsArray) => resolve(authorsArray));
+      getAuthors(uid).then((authorsArray) => resolve(authorsArray));
     })
     .catch((error) => reject(error));
 });

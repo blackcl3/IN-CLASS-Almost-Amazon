@@ -6,7 +6,7 @@ import showAuthors from '../components/pages/authors';
 import viewBooksByAuthor from '../components/pages/viewAuthor';
 import addAuthorForm from '../components/forms/addAuthorForm';
 import addBookForm from '../components/forms/addBookForm';
-import { getSingleAuthor } from '../../api/authorData';
+import { getSingleAuthor, updateAuthor } from '../../api/authorData';
 
 const domEvents = (uid) => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -50,7 +50,7 @@ const domEvents = (uid) => {
 
     // FIXME: ADD CLICK EVENT FOR SHOWING FORM FOR ADDING AN AUTHOR
     if (e.target.id.includes('add-author-btn')) {
-      addAuthorForm(uid);
+      addAuthorForm();
     }
     // FIXME: ADD CLICK EVENT FOR EDITING AN AUTHOR
     if (e.target.id.includes('update-author')) {
@@ -61,7 +61,17 @@ const domEvents = (uid) => {
     if (e.target.id.includes('add-favorite-author-btn')) {
       const [, authorFirebaseKey] = e.target.id.split('--');
       getSingleAuthor(authorFirebaseKey).then((response) => {
-        console.warn(response);
+        response.favorite = true;
+        updateAuthor(response, uid).then((authorsArray) => showAuthors(authorsArray));
+      });
+    }
+
+    if (e.target.id.includes('favorite-author-span')) {
+      console.warn(e.target.id);
+      const [, authorFirebaseKey] = e.target.id.split('--');
+      getSingleAuthor(authorFirebaseKey).then((response) => {
+        response.favorite = false;
+        updateAuthor(response, uid).then((authorsArray) => showAuthors(authorsArray));
       });
     }
   });
